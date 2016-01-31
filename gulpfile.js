@@ -10,15 +10,15 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync');
 
 var src = {
-    sassSrc : 'source/sass/*.sass',
-    scriptsSrc : 'source/scripts/*.js',
-    htmlSrc : 'source/*.html'
+    sass : 'source/sass/*.sass',
+    scripts : 'source/scripts/*.js',
+    html : 'source/*.html'
 }
 
 
 gulp.task('styles',function(){
 
-    gulp.src(src.sassSrc)
+    gulp.src(src.sass)
         .pipe(concat('styles.sass'))
         .pipe(gulp.dest('app/sass/'))
         .pipe(sass({outputStyle: 'compressed'}))
@@ -30,7 +30,7 @@ gulp.task('styles',function(){
 
 gulp.task('scripts',function(){
 
-    gulp.src(src.scriptsSrc)
+    gulp.src(src.scripts)
         .pipe(concat('scripts.js'))
         .pipe(gulp.dest('app/js/'))
         .pipe(jshint())
@@ -44,10 +44,9 @@ gulp.task('scripts',function(){
 
 gulp.task('html',function(){
 
-    gulp.src(src.htmlSrc)
+    gulp.src(src.html)
         .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(gulp.dest('app/'))
-        .pipe(browserSync.stream());
 
 });
 
@@ -65,7 +64,6 @@ gulp.task('inject',function(){
     gulp.src('app/*.html')
         .pipe(inject(gulp.src(['./app/js/*.js','./app/css/*.css']), {ignorePath: 'app/', addRootSlash: false, relative: false}))
         .pipe(gulp.dest('app/'))
-        .pipe(browserSync.stream());
 
 });
 
